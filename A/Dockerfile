@@ -1,8 +1,8 @@
 FROM ubuntu:latest
 RUN mkdir -p /usr/src/app
-COPY ./wik-devops-3tp/app.js /usr/src/app/
-COPY ./wik-devops-3tp/package-lock.json /usr/src/app/
-COPY ./wik-devops-3tp/package.json /usr/src/app/
+COPY ./API/app.js /usr/src/app/
+COPY ./API/package-lock.json /usr/src/app/
+COPY ./API/package.json /usr/src/app/
 COPY docker-entrypoint.sh /
 
 
