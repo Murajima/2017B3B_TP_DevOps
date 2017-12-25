@@ -1,0 +1,17 @@
+---
+- name: "Deploy stacks"
+  hosts: docker-manager1
+  remote_user: ubuntu
+  become: yes
+  gather_facts: yes
+  # Création du role
+  roles:
+    - role: deploy-stacks
+      registry:
+        # On le déploie sur la machine docker-manager1 définie dans le inventory.ini
+        host: docker-manager1
+        username: test
+        password: 123456
+      stacks:
+        # On déploie la stack nommée proxy dans le dossier stacks (soit proxy.yml)
+        - proxy

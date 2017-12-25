@@ -1,15 +1,18 @@
 version: "3.3"
   services:
+    # Service haproxy
     haproxy:
       image: dockercloud/haproxy
       deploy:
         mode: global
         resources:
+          # Limitations max de l'utilisation de cette stack soit 5% du processeur et 64MO de RAM max
         limits:
           cpus: "0.05"
               memory: 64M
+          # Réservation minimale de l'utilisation de cette stack , soit 1% du processeur et 20mo de RAM
           reservations:
-            cpus: '0.001'
+            cpus: '0.01'
             memory: 20M
           restart_policy:
           condition: on-failure
@@ -17,14 +20,15 @@ version: "3.3"
           parallelism: 2
         delay: 10s
         placement:
+        # Ne se lance que si le label loadbalanced =  true
         constraints:
         - "node.labels.loadbalanced == true"
       ports:
       - "node.role == manager"
-      - target: 443
-      published: 443
+      - target: 80
+      published: 80
       protocol: tcp
-      mode: ingress
+      mode: host
       volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
       networks:
